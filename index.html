@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <meta name="description" content="Личный каталог техники: устройства, заметки и места хранения.">
+    <title>Моя техника — личный каталог</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Моя техника — на главную">
+          <span class="brand-mark" aria-hidden="true">т</span>
+          <span>моя<span class="brand-light">техника</span></span>
+        </a>
+        <span class="privacy-note"><span class="privacy-dot" aria-hidden="true"></span>Личные данные в этом браузере</span>
+      </header>
+
+      <main id="top">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <p class="eyebrow">ЛИЧНЫЙ КАТАЛОГ</p>
+            <h1 id="page-title">Всё ваше.<br><span>В одном месте.</span></h1>
+            <p class="intro-text">Ведите здесь каталог своих любимых устройств. Добавляйте устройства, сохраняйте заметки и быстро находите нужное.</p>
+            <button class="button button-primary intro-button" id="add-device" type="button">
+              <span class="button-plus" aria-hidden="true">+</span> Добавить устройство
+            </button>
+          </div>
+          <div class="intro-art" aria-hidden="true">
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="art-device art-laptop"><span>⌘</span></div>
+            <div class="art-device art-phone"><span></span></div>
+            <div class="art-device art-router"><i></i><i></i><i></i></div>
+            <div class="art-spark spark-one">✳</div>
+            <div class="art-spark spark-two">✦</div>
+          </div>
+        </section>
+
+        <section class="catalog" aria-labelledby="catalog-title">
+          <div class="catalog-heading">
+            <div>
+              <p class="eyebrow">ВАША КОЛЛЕКЦИЯ</p>
+              <h2 id="catalog-title">Устройства <span class="count-pill" id="device-count">0</span></h2>
+            </div>
+            <button class="button button-secondary desktop-add" id="add-device-secondary" type="button">
+              <span class="button-plus" aria-hidden="true">+</span> Добавить
+            </button>
+          </div>
+
+          <div class="toolbar" aria-label="Поиск и фильтры каталога">
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Поиск устройств</span>
+              <input id="search-input" type="search" placeholder="Поиск по названию, модели или заметкам…" autocomplete="off">
+              <kbd>⌘ K</kbd>
+            </label>
+            <label class="filter-box">
+              <span class="visually-hidden">Фильтр по категории</span>
+              <select id="category-filter">
+                <option value="all">Все категории</option>
+                <option value="computer">Компьютеры</option>
+                <option value="phone">Телефоны</option>
+                <option value="network">Сеть и NAS</option>
+                <option value="audio">Аудио</option>
+                <option value="other">Другое</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="device-grid" id="device-grid" aria-live="polite"></div>
+          <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span class="footer-mark" aria-hidden="true">т</span>
+        <span>Создано для вашей коллекции.</span>
+        <span class="footer-storage"><span class="privacy-dot" aria-hidden="true"></span>Сохранение в localStorage</span>
+      </footer>
+    </div>
+
+    <dialog class="device-dialog" id="device-dialog" aria-labelledby="dialog-title">
+      <form class="device-form" id="device-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">КОЛЛЕКЦИЯ</p>
+            <h2 id="dialog-title">Новое устройство</h2>
+          </div>
+          <button class="icon-button close-dialog" type="button" aria-label="Закрыть окно">×</button>
+        </div>
+        <input id="device-id" name="id" type="hidden">
+
+        <div class="form-row">
+          <label class="field field-wide" for="device-name">Название <span aria-hidden="true">*</span>
+            <input id="device-name" name="name" type="text" maxlength="60" placeholder="Например, домашний ноутбук" required>
+          </label>
+          <label class="field" for="device-model">Модель
+            <input id="device-model" name="model" type="text" maxlength="60" placeholder="Например, MacBook Air">
+          </label>
+        </div>
+
+        <div class="form-row form-row-three">
+          <label class="field" for="device-category">Категория
+            <select id="device-category" name="category">
+              <option value="computer">Компьютер</option>
+              <option value="phone">Телефон</option>
+              <option value="network">Сеть и NAS</option>
+              <option value="audio">Аудио</option>
+              <option value="other">Другое</option>
+            </select>
+          </label>
+          <label class="field" for="device-icon">Значок
+            <select id="device-icon" name="icon">
+              <option value="💻">💻 Ноутбук</option>
+              <option value="🖥️">🖥️ Компьютер</option>
+              <option value="📱">📱 Телефон</option>
+              <option value="📡">📡 Сеть / NAS</option>
+              <option value="🎧">🎧 Аудио</option>
+              <option value="⌚">⌚ Часы</option>
+              <option value="📷">📷 Камера</option>
+              <option value="🔌">🔌 Другое</option>
+            </select>
+          </label>
+          <label class="field" for="device-location">Где находится
+            <input id="device-location" name="location" type="text" maxlength="60" placeholder="Например, кабинет">
+          </label>
+        </div>
+
+        <label class="field" for="device-notes">Заметки
+          <textarea id="device-notes" name="notes" rows="3" maxlength="240" placeholder="Полезные детали, дата покупки или гарантия…"></textarea>
+        </label>
+
+        <div class="dialog-actions">
+          <button class="button button-text close-dialog" type="button">Отмена</button>
+          <button class="button button-primary" type="submit">Сохранить устройство</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
